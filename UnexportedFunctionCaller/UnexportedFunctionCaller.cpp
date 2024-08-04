@@ -50,10 +50,18 @@ int wmain(int argc, wchar_t** argv) {
         return 1;
     }
 
-    fp pointer = (fp)((byte*)h + offset);
+    fp functionPointer = (fp)((byte*)h + offset);
 
-    // call the function with parameters that match the type definition above
-    pointer("my malicious call");
+    printf("Attempting to call the function\n");
+    try {
+        // call the function with parameters that match the type definition above
+        functionPointer("my malicious call");
+    }
+    catch (const std::exception& ex) {
+        printf("Exception while trying to call the function, %ws\n", ex.what());
+    }
+
+   
     return 0;
 }
 
